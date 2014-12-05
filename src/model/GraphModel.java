@@ -19,7 +19,6 @@ public class GraphModel {
 		double bound = (1.0D/size);
 		double[] onePheromones = graph.getProbabilities();
 		for (int i = 0; i < size; i++) {
-//			TODO Double check this
 			if(fittest.getBitSet().get(i)){ //if 1-edge was used
 				double limit=1-bound;
 				double newPheromonRate = (1-evaporationRate)*onePheromones[i]+evaporationRate;

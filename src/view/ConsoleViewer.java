@@ -14,9 +14,9 @@ public class ConsoleViewer {
 		this.model = model;
 	}
 
-	public void redraw(int iteration, Individual fittest) {
+	public void redraw(int iteration, Individual fittest, Individual current) {
 		clear();
-		printHead(iteration, fittest);
+		printHead(iteration, fittest, current);
 		printPheromones();
 	}
 
@@ -25,19 +25,23 @@ public class ConsoleViewer {
 		System.out.flush();
 	}
 
-	private void printHead(int iteration, Individual fittest) {
+	private void printHead(int iteration, Individual fittest, Individual current) {
 		System.out.println("MMAS Simulator - current fitness function: "
 				+ model.getFunctionName());
 		System.out.println();
-		System.out.printf(" Fitness value: %-12s      \tIteration: %05d\n",
+		System.out.printf(" Best Fitness: %-12s      \tIteration: %05d\n",
 				fittest.getFitness(), iteration);
-		System.out.printf(" Binary value:  %s\n\n", fittest.toString());
+		System.out.printf(" Best Path:    %s\n", fittest.toString());
+		System.out.printf(" Current Path: %s\n\n", current.toString());
 	}
 
 	private void printPheromones() {
 		double[] pheromones = model.getProbabilities();
 
 		for (int i = 0; i < pheromones.length;) {
+			if(i!=0){
+				System.out.print("\n\n");
+			}
 			String oneProbabilities = " ";
 			String zeroProbabilities = " ";
 			String whichX = " ";
@@ -54,7 +58,7 @@ public class ConsoleViewer {
 			}
 			System.out.println(oneProbabilities);
 			System.out.println(zeroProbabilities);
-			System.out.println(whichX + "\n\n");
+			System.out.println(whichX);
 		}
 	}
 
