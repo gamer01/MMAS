@@ -6,8 +6,8 @@ public class LinearDAG {
 	
 	public LinearDAG(int size){
 		oneProbabilities = new double[size];
-		for (double elem : oneProbabilities){
-			elem=.5D;
+		for (int i = 0; i < oneProbabilities.length; i++) {
+			oneProbabilities[i]=.5d;
 		}
 	}
 	

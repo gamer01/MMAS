@@ -5,16 +5,18 @@ import java.util.Random;
 
 public class Individual {
 	
-	BitSet value;
-	IFitnessFunction fitnessFunction;
+	private int length; //because BitSet sometimes apears to be smaller
+	private BitSet value;
+	private IFitnessFunction fitnessFunction;
 	
-	public Individual (int length,IFitnessFunction fitnessFunction,LinearDAG graph){
+	public Individual (IFitnessFunction fitnessFunction,LinearDAG graph){
+		length=graph.getSize();
 		value = new BitSet(length);
 		this.fitnessFunction=fitnessFunction;
 		
 		double[] oneProbabilities = graph.getProbabilities();
 		Random random = new Random();
-		for (int i = 0; i < oneProbabilities.length; i++) {
+		for (int i = 0; i < length; i++) {
 			// the bit is set according to probability
 			if(random.nextDouble()<oneProbabilities[i]){
 				value.set(i);
@@ -24,8 +26,8 @@ public class Individual {
 	
 	public String toString(){
 		String valueString="";
-		for (int i = 0; i < value.length(); i++) {
-			valueString+=value.get(i)?"1":"0";			
+		for (int i = 0; i < length; i++) {
+			valueString+=value.get(i)?"1":"0";
 		}
 		return valueString;
 	}

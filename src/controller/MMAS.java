@@ -1,4 +1,4 @@
-package controler;
+package controller;
 
 import view.ConsoleViewer;
 import model.*;
@@ -11,8 +11,6 @@ public class MMAS {
 	private static Individual fittest;
 
 	public static void main(String[] args) {
-		
-		System.out.println("hello world!");
 		
 		model=new GraphModel(10,new MaxOnes(),0.5D);
 		view=new ConsoleViewer(model);
@@ -27,21 +25,15 @@ public class MMAS {
 			}
 			update();
 		}
-		
 	}
 
 	private static boolean fitestIndividualNotOptimum() {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	private static Individual constructSolution() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	private static void update(){
-		model.updatePheromones();
+		model.updatePheromones(fittest);
 		view.redraw(iteration,fittest);
 	}
 

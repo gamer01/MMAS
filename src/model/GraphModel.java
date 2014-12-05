@@ -15,16 +15,24 @@ public class GraphModel {
 		this.evaporationRate=evaporationRate;
 	}
 
-	public void updatePheromones() {
+	public void updatePheromones(Individual fittest) {
 		// TODO Auto-generated method stub
 	}
 	
 	public int getGraphSize(){
 		return graph.getSize();
 	}
-
+	
+	public double[] getProbabilities(){
+		return graph.getProbabilities();
+	}
+ 
 	public Individual createNewIndividual() {
-		return new Individual(getGraphSize(), fitnessFunction, graph);
+		return new Individual(fitnessFunction, graph);
+	}
+	
+	public String getFunctionName(){
+		return fitnessFunction.getName();
 	}
 
 }
