@@ -1,17 +1,17 @@
 package model;
 
 public class LinearDAG {
-	
+
 	private double[] oneProbabilities;
-	
-	public LinearDAG(int size){
+
+	public LinearDAG(int size) {
 		oneProbabilities = new double[size];
 		for (int i = 0; i < oneProbabilities.length; i++) {
-			oneProbabilities[i]=.5d;
+			oneProbabilities[i] = .5d;
 		}
 	}
-	
-	protected double[] getProbabilities(){
+
+	protected double[] getProbabilities() {
 		return oneProbabilities;
 	}
 
