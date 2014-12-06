@@ -47,4 +47,7 @@ public class GraphModel {
 		return fitnessFunction.getName();
 	}
 
+	public double getEvaporationRate(){
+		return evaporationRate;
+	}
 }

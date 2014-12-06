@@ -9,11 +9,24 @@ public class MMAS {
 
 	private static GraphModel model;
 	private static ConsoleViewer view;
-	private static int iteration = 0;
+	private static int iteration = 1;
 	private static Individual fittest;
+	private static final long DEFAULT_ITERATIONTIME = 200L;
+	private static long iterationTime;
 
 	public static void main(String[] args) {
 		
+		if(args.length>0){
+			try{
+				iterationTime = Long.parseLong(args[0]);
+			} catch (NumberFormatException e){
+				iterationTime=DEFAULT_ITERATIONTIME;
+			}
+		} else{
+			iterationTime=DEFAULT_ITERATIONTIME;
+		}
+		
+		ConsoleViewer.clear();
 		System.out.println("MMAS Simulator\n");
 
 		double evap = askEvaporation();
@@ -27,7 +40,7 @@ public class MMAS {
 		while (fittestIndividualNotOptimum()) {
 			iteration++;
 			try {
-				Thread.sleep(200L);
+				Thread.sleep(iterationTime);
 			} catch (InterruptedException e) {
 			}
 			Individual newSolution = model.createNewIndividual();
@@ -48,10 +61,12 @@ public class MMAS {
 		@SuppressWarnings("resource")
 		Scanner in = new Scanner(System.in);
 
+		String next = null;
 		// Reads a single line from the console
 		try {
-			evaporation = Double.parseDouble(in.nextLine());
-			if (0 < evaporation && evaporation < 1) {
+			next = in.nextLine();
+			evaporation = Double.parseDouble(next);
+			if (!(0 < evaporation && evaporation < 1)) {
 				throw new NumberFormatException();
 			}
 		} catch (NumberFormatException e) {
@@ -61,7 +76,7 @@ public class MMAS {
 	}
 
 	private static IFitnessFunction askFitnessfunction() {
-		// default value
+		// TODO default value
 		IFitnessFunction function = new MaxOnes();
 		return function;
 	}
@@ -90,7 +105,7 @@ public class MMAS {
 
 	private static boolean fittestIndividualNotOptimum() {
 		// TODO Auto-generated method stub
-		return iteration < 1000;
+		return iteration < 99999 && model.getGraphSize() > fittest.getFitness();
 	}
 
 	private static void update(Individual current) {

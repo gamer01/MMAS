@@ -5,8 +5,8 @@ import model.Individual;
 
 public class ConsoleViewer {
 
-	private static final int LINEWITH = 10;
-	private static final int PRECITION = 4;
+	private static final int LINEWITH = 8;
+	private static final int PRECITION = 5;
 
 	private GraphModel model;
 
@@ -20,14 +20,15 @@ public class ConsoleViewer {
 		printPheromones();
 	}
 
-	private static void clear() {
+	public static void clear() {
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
 	}
 
 	private void printHead(int iteration, Individual fittest, Individual current) {
 		System.out.println("MMAS Simulator - current fitness function: "
-				+ model.getFunctionName());
+				+ model.getFunctionName() + ", n=" + model.getGraphSize()
+				+ ", ρ=" + model.getEvaporationRate());
 		System.out.println();
 		System.out.printf(" Best Fitness: %-12s      \tIteration: %05d\n",
 				fittest.getFitness(), iteration);
@@ -39,7 +40,7 @@ public class ConsoleViewer {
 		double[] pheromones = model.getProbabilities();
 
 		for (int i = 0; i < pheromones.length;) {
-			if(i!=0){
+			if (i != 0) {
 				System.out.print("\n\n");
 			}
 			String oneProbabilities = " ";
