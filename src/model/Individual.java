@@ -3,6 +3,8 @@ package model;
 import java.util.BitSet;
 import java.util.Random;
 
+import model.functions.IFitnessFunction;
+
 public class Individual {
 
 	private int length; // because BitSet sometimes apears to be smaller

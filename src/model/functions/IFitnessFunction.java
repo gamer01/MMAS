@@ -1,4 +1,6 @@
-package model;
+package model.functions;
+
+import model.Individual;
 
 public interface IFitnessFunction {
 

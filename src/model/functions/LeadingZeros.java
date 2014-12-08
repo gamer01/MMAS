@@ -1,6 +1,8 @@
-package model;
+package model.functions;
 
 import java.util.BitSet;
+
+import model.Individual;
 
 public class LeadingZeros implements IFitnessFunction {
 

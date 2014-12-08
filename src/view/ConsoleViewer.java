@@ -5,19 +5,24 @@ import model.Individual;
 
 public class ConsoleViewer {
 
-	private static final int LINEWITH = 8;
+	private int linewidth = 8;
 	private static final int PRECITION = 5;
 
 	private GraphModel model;
 
 	public ConsoleViewer(GraphModel model) {
 		this.model = model;
+		linewidth = model.getGraphSize() > 16 ? (int) Math.ceil(Math.sqrt(model
+				.getGraphSize() * 2.0D)) : linewidth;
 	}
 
 	public void redraw(int iteration, Individual fittest, Individual current) {
-		clear();
+		System.out.print("\033[H");
+		System.out.flush();
 		printHead(iteration, fittest, current);
-		printPheromones();
+		if(model.getGraphSize()<=128){
+			printPheromones();			
+		}
 	}
 
 	public static void clear() {
@@ -26,7 +31,7 @@ public class ConsoleViewer {
 	}
 
 	private void printHead(int iteration, Individual fittest, Individual current) {
-		System.out.println("MMAS Simulator - current fitness function: "
+		System.out.println("MMAS Simulator - fitness-function="
 				+ model.getFunctionName() + ", n=" + model.getGraphSize()
 				+ ", ρ=" + model.getEvaporationRate());
 		System.out.println();
@@ -46,7 +51,7 @@ public class ConsoleViewer {
 			String oneProbabilities = " ";
 			String zeroProbabilities = " ";
 			String whichX = " ";
-			for (int elemsOnLine = 0; elemsOnLine < LINEWITH
+			for (int elemsOnLine = 0; elemsOnLine < linewidth
 					&& i < pheromones.length; elemsOnLine++) {
 				oneProbabilities += String.format("%." + PRECITION + "f  ",
 						pheromones[i]);

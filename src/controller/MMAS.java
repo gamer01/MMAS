@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import view.ConsoleViewer;
 import model.*;
+import model.functions.IFitnessFunction;
+import model.functions.MaxOnes;
 
 public class MMAS {
 
@@ -11,7 +13,7 @@ public class MMAS {
 	private static ConsoleViewer view;
 	private static int iteration = 1;
 	private static Individual fittest;
-	private static final long DEFAULT_ITERATIONTIME = 200L;
+	private static final long DEFAULT_ITERATIONTIME = 100L;
 	private static long iterationTime;
 
 	public static void main(String[] args) {
@@ -29,9 +31,13 @@ public class MMAS {
 		ConsoleViewer.clear();
 		System.out.println("MMAS Simulator\n");
 
+		IFitnessFunction func = askFitnessfunction();
 		double evap = askEvaporation();
+		int size = askSize();
+		
+		ConsoleViewer.clear();
 
-		model = new GraphModel(askSize(), askFitnessfunction(), evap);
+		model = new GraphModel(size, func, evap);
 		view = new ConsoleViewer(model);
 
 		fittest = model.createNewIndividual();

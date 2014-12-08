@@ -1,5 +1,7 @@
 package model;
 
+import model.functions.IFitnessFunction;
+
 public class GraphModel {
 
 	private IFitnessFunction fitnessFunction;
