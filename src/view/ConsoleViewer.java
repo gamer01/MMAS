@@ -9,11 +9,13 @@ public class ConsoleViewer {
 	private static final int PRECITION = 5;
 
 	private GraphModel model;
+	private String complexity;
 
 	public ConsoleViewer(GraphModel model) {
 		this.model = model;
 		linewidth = model.getGraphSize() > 16 ? (int) Math.ceil(Math.sqrt(model
 				.getGraphSize() * 2.0D)) : linewidth;
+		complexity = model.getFunction().getComplexityInfo(model.getGraphSize(), model.getEvaporationRate());
 	}
 
 	public void redraw(int iteration, Individual fittest, Individual current) {
@@ -35,6 +37,7 @@ public class ConsoleViewer {
 				+ model.getFunctionName() + ", n=" + model.getGraphSize()
 				+ ", ρ=" + model.getEvaporationRate());
 		System.out.println();
+		System.out.print(complexity);
 		System.out.printf(" Best Fitness: %-12s      \tIteration: %05d\n",
 				fittest.getFitness(), iteration);
 		System.out.printf(" Best Path:    %s\n", fittest.toString());

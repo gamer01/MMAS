@@ -1,18 +1,35 @@
 package model.functions;
 
+import java.util.BitSet;
+
 import model.Individual;
 
-public class MaxOnes implements IFitnessFunction {
+public class MaxOnes extends FitnessFunction {
 
 	private static final String name = "MaxOnes";
 
-	@Override
 	public int getFittness(Individual individual) {
 		return individual.getBitSet().cardinality();
 	}
 
-	@Override
 	public String getName() {
 		return name;
+	}
+
+	public String getComplexityInfo(int graphSize) {
+		
+		return null;
+	}
+
+	public BitSet getOptimum(int graphSize) {
+		BitSet optimum = new BitSet(graphSize);
+		for (int i = 0; i < optimum.length(); i++) {
+			optimum.set(i);
+		}
+		return optimum;
+	}
+
+	public String getThisComplexity() {
+		return "(n log n)/ρ";
 	}
 }

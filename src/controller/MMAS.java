@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import view.ConsoleViewer;
 import model.*;
-import model.functions.IFitnessFunction;
+import model.functions.FitnessFunction;
 import model.functions.MaxOnes;
 
 public class MMAS {
@@ -31,7 +31,7 @@ public class MMAS {
 		ConsoleViewer.clear();
 		System.out.println("MMAS Simulator\n");
 
-		IFitnessFunction func = askFitnessfunction();
+		FitnessFunction func = askFitnessfunction();
 		double evap = askEvaporation();
 		int size = askSize();
 		
@@ -81,9 +81,9 @@ public class MMAS {
 		return evaporation;
 	}
 
-	private static IFitnessFunction askFitnessfunction() {
+	private static FitnessFunction askFitnessfunction() {
 		// TODO default value
-		IFitnessFunction function = new MaxOnes();
+		FitnessFunction function = new MaxOnes();
 		return function;
 	}
 

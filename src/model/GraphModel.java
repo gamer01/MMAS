@@ -1,15 +1,15 @@
 package model;
 
-import model.functions.IFitnessFunction;
+import model.functions.FitnessFunction;
 
 public class GraphModel {
 
-	private IFitnessFunction fitnessFunction;
+	private FitnessFunction fitnessFunction;
 	private double evaporationRate;
 
 	private LinearDAG graph;
 
-	public GraphModel(int size, IFitnessFunction fitnessFunction,
+	public GraphModel(int size, FitnessFunction fitnessFunction,
 			double evaporationRate) {
 		graph = new LinearDAG(size);
 		this.fitnessFunction = fitnessFunction;
@@ -47,6 +47,10 @@ public class GraphModel {
 
 	public String getFunctionName() {
 		return fitnessFunction.getName();
+	}
+	
+	public FitnessFunction getFunction() {
+		return fitnessFunction;
 	}
 
 	public double getEvaporationRate(){

@@ -1,17 +1,17 @@
 package model;
 
-import java.util.BitSet;
+import java.util.BitSet;	
 import java.util.Random;
 
-import model.functions.IFitnessFunction;
+import model.functions.FitnessFunction;
 
 public class Individual {
 
 	private int length; // because BitSet sometimes apears to be smaller
 	private BitSet value;
-	private IFitnessFunction fitnessFunction;
+	private FitnessFunction fitnessFunction;
 
-	public Individual(IFitnessFunction fitnessFunction, LinearDAG graph) {
+	public Individual(FitnessFunction fitnessFunction, LinearDAG graph) {
 		length = graph.getSize();
 		value = new BitSet(length);
 		this.fitnessFunction = fitnessFunction;
@@ -35,7 +35,7 @@ public class Individual {
 		return valueString;
 	}
 
-	protected BitSet getBitSet() {
+	public BitSet getBitSet() {
 		return value;
 	}
 

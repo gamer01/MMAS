@@ -4,11 +4,10 @@ import java.util.BitSet;
 
 import model.Individual;
 
-public class LeadingZeros implements IFitnessFunction {
+public class LeadingZeros extends FitnessFunction {
 
 	private static final String name = "LeadingZeros";
 
-	@Override
 	public int getFittness(Individual individual) {
 		BitSet binVal = individual.getBitSet();
 
@@ -19,9 +18,15 @@ public class LeadingZeros implements IFitnessFunction {
 		return leadingZeros;
 	}
 
-	@Override
 	public String getName() {
 		return name;
 	}
 
+	public BitSet getOptimum(int graphSize) {
+		return new BitSet(graphSize);
+	}
+
+	public String getThisComplexity() {
+		return "n²+(n log n)/ρ";
+	}
 }
