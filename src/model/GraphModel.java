@@ -17,18 +17,22 @@ public class GraphModel {
 	}
 
 	public void updatePheromones(Individual fittest) {
-		int size=graph.getSize();
-		double bound = (1.0D/size);
+		int size = graph.getSize();
+		double bound = (1.0D / size);
 		double[] onePheromones = graph.getProbabilities();
 		for (int i = 0; i < size; i++) {
-			if(fittest.getBitSet().get(i)){ //if 1-edge was used
-				double limit=1-bound;
-				double newPheromonRate = (1-evaporationRate)*onePheromones[i]+evaporationRate;
-				onePheromones[i] = limit < newPheromonRate ? limit : newPheromonRate;
+			if (fittest.getBitSet().get(i)) { // if 1-edge was used
+				double limit = 1 - bound;
+				double newPheromonRate = (1 - evaporationRate)
+						* onePheromones[i] + evaporationRate;
+				onePheromones[i] = limit < newPheromonRate ? limit
+						: newPheromonRate;
 			} else {
-				double limit=bound;
-				double newPheromonRate = (1-evaporationRate)*onePheromones[i];
-				onePheromones[i] = limit > newPheromonRate ? limit : newPheromonRate;
+				double limit = bound;
+				double newPheromonRate = (1 - evaporationRate)
+						* onePheromones[i];
+				onePheromones[i] = limit > newPheromonRate ? limit
+						: newPheromonRate;
 			}
 		}
 	}
@@ -48,12 +52,12 @@ public class GraphModel {
 	public String getFunctionName() {
 		return fitnessFunction.getName();
 	}
-	
+
 	public FitnessFunction getFunction() {
 		return fitnessFunction;
 	}
 
-	public double getEvaporationRate(){
+	public double getEvaporationRate() {
 		return evaporationRate;
 	}
 }

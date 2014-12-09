@@ -8,6 +8,7 @@ public class LeadingZeros extends FitnessFunction {
 
 	private static final String name = "LeadingZeros";
 
+	@Override
 	public int getFittness(Individual individual) {
 		BitSet binVal = individual.getBitSet();
 		int codeLength = individual.getLengh();
@@ -19,14 +20,17 @@ public class LeadingZeros extends FitnessFunction {
 		return leadingZeros;
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
 
+	@Override
 	public BitSet getOptimum(int graphSize) {
 		return new BitSet(graphSize);
 	}
 
+	@Override
 	public String getThisComplexity() {
 		return "n²+(n log n)/ρ";
 	}

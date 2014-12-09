@@ -15,15 +15,16 @@ public class ConsoleViewer {
 		this.model = model;
 		linewidth = model.getGraphSize() > 16 ? (int) Math.ceil(Math.sqrt(model
 				.getGraphSize() * 2.0D)) : linewidth;
-		complexity = model.getFunction().getComplexityInfo(model.getGraphSize(), model.getEvaporationRate());
+		complexity = model.getFunction().getComplexityInfo(
+				model.getGraphSize(), model.getEvaporationRate());
 	}
 
 	public void redraw(int iteration, Individual fittest, Individual current) {
 		System.out.print("\033[H");
 		System.out.flush();
 		printHead(iteration, fittest, current);
-		if(model.getGraphSize()<=128){
-			printPheromones();			
+		if (model.getGraphSize() <= 128) {
+			printPheromones();
 		}
 	}
 

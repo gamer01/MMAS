@@ -19,17 +19,17 @@ public class MMAS {
 	private static BitSet optimum;
 
 	public static void main(String[] args) {
-		
-		if(args.length>0){
-			try{
+
+		if (args.length > 0) {
+			try {
 				iterationTime = Long.parseLong(args[0]);
-			} catch (NumberFormatException e){
-				iterationTime=DEFAULT_ITERATIONTIME;
+			} catch (NumberFormatException e) {
+				iterationTime = DEFAULT_ITERATIONTIME;
 			}
-		} else{
-			iterationTime=DEFAULT_ITERATIONTIME;
+		} else {
+			iterationTime = DEFAULT_ITERATIONTIME;
 		}
-		
+
 		ConsoleViewer.clear();
 		System.out.println("MMAS Simulator\n");
 
@@ -37,7 +37,7 @@ public class MMAS {
 		double evap = askEvaporation();
 		int size = askSize();
 		optimum = func.getOptimum(size);
-		
+
 		ConsoleViewer.clear();
 
 		model = new GraphModel(size, func, evap);

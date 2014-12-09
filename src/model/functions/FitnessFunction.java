@@ -7,19 +7,19 @@ import model.Individual;
 
 public abstract class FitnessFunction {
 
-	public abstract int getFittness(Individual i);
+	public abstract String getName();
 
 	public String getComplexityInfo(int graphSize, double evaporationFactor) {
 		BigDecimal iterations = new BigDecimal(2).pow(graphSize);
 
-		return " Iterations by trying out: " + String.format("%1.3e",iterations) + "\n MMAS needs 𝓞("
-				+ getThisComplexity() + ") for "
-				+ this.getName() + "\n\n";
+		return " Iterations by trying out: "
+				+ String.format("%1.3e", iterations) + "\n MMAS needs 𝓞("
+				+ getThisComplexity() + ") for " + this.getName() + "\n\n";
 	}
 
 	public abstract String getThisComplexity();
 
-	public abstract BitSet getOptimum(int graphSize);
+	public abstract int getFittness(Individual i);
 
-	public abstract String getName();
+	public abstract BitSet getOptimum(int graphSize);
 }
