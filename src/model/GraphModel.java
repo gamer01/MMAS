@@ -9,11 +9,10 @@ public class GraphModel {
 
 	private LinearDAG graph;
 
-	public GraphModel(int size, FitnessFunction fitnessFunction,
-			double evaporationRate) {
-		graph = new LinearDAG(size);
-		this.fitnessFunction = fitnessFunction;
-		this.evaporationRate = evaporationRate;
+	public GraphModel(UserInput input) {
+		graph = new LinearDAG(input.getSize());
+		this.fitnessFunction = input.getFitnessFunction();
+		this.evaporationRate = input.getEvaporation();
 	}
 
 	public void updatePheromones(Individual fittest) {
