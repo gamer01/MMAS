@@ -14,31 +14,21 @@ public class MMAS {
 	private static ConsoleViewer view;
 	private static int iteration = 1;
 	private static Individual fittest;
-	private static final long DEFAULT_ITERATIONTIME = 100L;
 	private static long iterationTime;
 	private static BitSet optimum;
 
+	private static final long DEFAULT_ITERATIONTIME = 100L;
+	private static final double DEFAULT_EVAPORATION = 0.5D;
+	private static final int DEFAULT_SIZE = 16;
+
+	private static FitnessFunction func;
+	private static int size = DEFAULT_SIZE;
+	private static double evap = DEFAULT_EVAPORATION;
+	private static boolean noGreetingSoFar = true;
+
 	public static void main(String[] args) {
 
-		if (args.length > 0) {
-			try {
-				iterationTime = Long.parseLong(args[0]);
-			} catch (NumberFormatException e) {
-				iterationTime = DEFAULT_ITERATIONTIME;
-			}
-		} else {
-			iterationTime = DEFAULT_ITERATIONTIME;
-		}
-
-		ConsoleViewer.clear();
-		System.out.println("MMAS Simulator\n");
-
-		FitnessFunction func = askFitnessfunction();
-		double evap = askEvaporation();
-		int size = askSize();
-		optimum = func.getOptimum(size);
-
-		ConsoleViewer.clear();
+		initialize(args);
 
 		model = new GraphModel(size, func, evap);
 		view = new ConsoleViewer(model);
@@ -60,37 +50,140 @@ public class MMAS {
 		}
 	}
 
-	private static double askEvaporation() {
-		// default value
-		final double defaul = 0.5D;
-		double evaporation = defaul;
+	/**
+	 * The application will use the first up to 4 command line arguments to
+	 * initialize variables:
+	 * 
+	 * func evap size iterationTime
+	 * 
+	 * in that order. If arguments are missing or can not be parsed it will use
+	 * either defaults or user inputs
+	 */
+	private static void initialize(String[] args) {
+		iterationTime = DEFAULT_ITERATIONTIME;
+		func = FunctionList.getInstance().get(0);
 
-		System.out.print(" Set ρ (from interval ]0,1[, default " + defaul
-				+ "): ");
+		setFitnessfunction(args, 0);
+		setEvaporation(args, 1);
+		setSize(args, 2);
+
+		// set the iteration Time
+		try {
+			iterationTime = Long.parseLong(args[3]);
+		} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+			iterationTime = DEFAULT_ITERATIONTIME;
+		}
+
+		optimum = func.getOptimum(size);
+
+		ConsoleViewer.clear();
+	}
+
+	private static void setFitnessfunction(String[] cliArg, int index) {
+		int fnumber = 0;
+
 		@SuppressWarnings("resource")
 		Scanner in = new Scanner(System.in);
 
-		String next = null;
-		// Reads a single line from the console
 		try {
-			next = in.nextLine();
-			evaporation = Double.parseDouble(next);
-			if (!(0 < evaporation && evaporation < 1)) {
+			fnumber = Integer.parseInt(cliArg[index]) - 1;
+			if (!(fnumber >= 0 && fnumber < FunctionList.getInstance().size())) {
 				throw new NumberFormatException();
 			}
-		} catch (NumberFormatException e) {
-			evaporation = defaul;
-			System.out.println(" Input could not be read, default is used: ρ="
-					+ evaporation);
+			func = FunctionList.getInstance().get(fnumber);
+		} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+			try {
+				printGreeting();
+				// Reads a single line from the console
+				listFunctions();
+
+				System.out
+						.print(" Select one of the fitness functions by number: ");
+				fnumber = Integer.parseInt(in.nextLine()) - 1;
+				if (!(fnumber >= 0 && fnumber < FunctionList.getInstance()
+						.size())) {
+					throw new NumberFormatException();
+				}
+				func = FunctionList.getInstance().get(fnumber);
+			} catch (NumberFormatException e2) {
+				System.out
+						.println(" Input could not be read, default is used: func="
+								+ func.getName());
+			}
 		}
-		return evaporation;
 	}
 
-	private static FitnessFunction askFitnessfunction() {
-		FitnessFunction func = FunctionList.getInstance().get(0);
-		int fnumber;
+	private static void setEvaporation(String[] cliArg, int index) {
+		@SuppressWarnings("resource")
+		Scanner in = new Scanner(System.in);
 
-		// find longest functionname
+		try {
+			evap = Double.parseDouble(cliArg[index]);
+			if (!(0 < evap && evap < 1)) {
+				throw new NumberFormatException();
+			}
+		} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+			try {
+				printGreeting();
+				// Reads a single line from the console
+				System.out.print(" Set ρ (from interval ]0,1[, default "
+						+ DEFAULT_EVAPORATION + "): ");
+				String next = in.nextLine();
+				evap = Double.parseDouble(next);
+				if (!(0 < evap && evap < 1)) {
+					throw new NumberFormatException();
+				}
+			} catch (NumberFormatException e2) {
+				evap = DEFAULT_EVAPORATION;
+				System.out
+						.println(" Input could not be read, default is used: ρ="
+								+ evap);
+			}
+		}
+	}
+
+	private static void setSize(String[] cliArg, int index) {
+		@SuppressWarnings("resource")
+		Scanner in = new Scanner(System.in);
+
+		try {
+			size = Integer.parseInt(cliArg[index]);
+			if (size < 1) {
+				throw new NumberFormatException();
+			}
+		} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+			try {
+				printGreeting();
+				// Reads a single line from the console
+				System.out.print(" Set n (from interval [1,∞[, default "
+						+ DEFAULT_SIZE + "):  ");
+				size = Integer.parseInt(in.nextLine());
+				if (size < 1) {
+					throw new NumberFormatException();
+				}
+			} catch (NumberFormatException e2) {
+				size = DEFAULT_SIZE;
+				System.out
+						.println(" Input could not be read, default is used: n="
+								+ size);
+			}
+		}
+	}
+
+	private static void printGreeting() {
+		// only print heading if we need to userInput anything
+		if (noGreetingSoFar) {
+			ConsoleViewer.clear();
+			System.out.println("MMAS Simulator\n");
+			noGreetingSoFar = false;
+		}
+	}
+
+	private static boolean fittestIndividualNotOptimum() {
+		return iteration < 99999 && !fittest.getBitSet().equals(optimum);
+	}
+
+	private static void listFunctions() {
 		int maxFuncnameLength = 0;
 		for (int i = 0; i < FunctionList.getInstance().size(); i++) {
 			maxFuncnameLength = FunctionList.getInstance().get(i).getName()
@@ -112,53 +205,6 @@ public class MMAS {
 		System.out.println(" └"
 				+ new String(new char[CHARS_BEFORE_AND_AFTER_FUNCTIONNAME
 						+ maxFuncnameLength]).replace("\0", "═") + "┘");
-
-		System.out.print(" Select one of the fitness functions by number: ");
-		@SuppressWarnings("resource")
-		Scanner in = new Scanner(System.in);
-
-		// Reads a single line from the console
-		try {
-			fnumber = Integer.parseInt(in.nextLine()) - 1;
-			if (!(fnumber >= 0 && fnumber < FunctionList.getInstance().size())) {
-				throw new NumberFormatException();
-			}
-			func = FunctionList.getInstance().get(fnumber);
-		} catch (NumberFormatException e) {
-			System.out
-					.println(" Input could not be read, default is used: func="
-							+ func.getName());
-		}
-
-		// TODO default value
-		return func;
-	}
-
-	private static int askSize() {
-		final int defaul = 16;
-		int size = defaul;
-
-		System.out.print(" Set n (from interval [1,∞[, default " + defaul
-				+ "):  ");
-		@SuppressWarnings("resource")
-		Scanner in = new Scanner(System.in);
-
-		// Reads a single line from the console
-		try {
-			size = Integer.parseInt(in.nextLine());
-			if (size < 1) {
-				throw new NumberFormatException();
-			}
-		} catch (NumberFormatException e) {
-			size = defaul;
-			System.out.println(" Input could not be read, default is used: n="
-					+ size);
-		}
-		return size;
-	}
-
-	private static boolean fittestIndividualNotOptimum() {
-		return iteration < 99999 && !fittest.getBitSet().equals(optimum);
 	}
 
 	private static void update(Individual current) {
