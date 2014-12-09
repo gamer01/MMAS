@@ -6,7 +6,7 @@ import java.util.Scanner;
 import view.ConsoleViewer;
 import model.*;
 import model.functions.FitnessFunction;
-import model.functions.MaxOnes;
+import model.functions.FunctionList;
 
 public class MMAS {
 
@@ -86,8 +86,7 @@ public class MMAS {
 
 	private static FitnessFunction askFitnessfunction() {
 		// TODO default value
-		FitnessFunction function = new MaxOnes();
-		return function;
+		return FunctionList.getInstance().get(1);
 	}
 
 	private static int askSize() {

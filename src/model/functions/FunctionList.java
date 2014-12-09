@@ -4,18 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FunctionList {
-	
+
 	private static FunctionList instance = null;
 	private List<FitnessFunction> funcs;
-	
-	private FunctionList(){
+
+	private FunctionList() {
 		funcs = new ArrayList<FitnessFunction>();
 		funcs.add(new MaxOnes());
 		funcs.add(new LeadingZeros());
 	}
-	
-	public static FunctionList getInstance(){
+
+	public static FunctionList getInstance() {
+		if (instance == null) {
+			instance = new FunctionList();
+		}
 		return instance;
 	}
 
+	public FitnessFunction get(int index) {
+		return funcs.get(index);
+	}
 }

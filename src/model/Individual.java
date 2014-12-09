@@ -1,6 +1,6 @@
 package model;
 
-import java.util.BitSet;	
+import java.util.BitSet;
 import java.util.Random;
 
 import model.functions.FitnessFunction;
@@ -37,6 +37,10 @@ public class Individual {
 
 	public BitSet getBitSet() {
 		return value;
+	}
+
+	public int getLengh() {
+		return length;
 	}
 
 	public int getFitness() {

@@ -10,9 +10,10 @@ public class LeadingZeros extends FitnessFunction {
 
 	public int getFittness(Individual individual) {
 		BitSet binVal = individual.getBitSet();
+		int codeLength = individual.getLengh();
 
 		int leadingZeros = 0;
-		while (leadingZeros < binVal.length() && !binVal.get(leadingZeros)) {
+		while (leadingZeros < codeLength && !binVal.get(leadingZeros)) {
 			leadingZeros++;
 		}
 		return leadingZeros;
