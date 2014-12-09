@@ -25,4 +25,8 @@ public class FunctionList {
 	public FitnessFunction get(int index) {
 		return funcs.get(index);
 	}
+	
+	public int size(){
+		return funcs.size();
+	}
 }

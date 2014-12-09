@@ -80,13 +80,58 @@ public class MMAS {
 			}
 		} catch (NumberFormatException e) {
 			evaporation = defaul;
+			System.out.println(" Input could not be read, default is used: ρ="
+					+ evaporation);
 		}
 		return evaporation;
 	}
 
 	private static FitnessFunction askFitnessfunction() {
+		FitnessFunction func = FunctionList.getInstance().get(0);
+		int fnumber;
+
+		// find longest functionname
+		int maxFuncnameLength = 0;
+		for (int i = 0; i < FunctionList.getInstance().size(); i++) {
+			maxFuncnameLength = FunctionList.getInstance().get(i).getName()
+					.length() > maxFuncnameLength ? FunctionList.getInstance()
+					.get(i).getName().length() : maxFuncnameLength;
+		}
+
+		// draw upper border
+		final int CHARS_BEFORE_AND_AFTER_FUNCTIONNAME = 8;
+		System.out.println(" ┌"
+				+ new String(new char[CHARS_BEFORE_AND_AFTER_FUNCTIONNAME
+						+ maxFuncnameLength]).replace("\0", "═") + "┐");
+		// draw functions enumeration
+		for (int i = 0; i < FunctionList.getInstance().size(); i++) {
+			System.out.printf(" │ %2d - %-" + maxFuncnameLength + "s  │\n",
+					i + 1, FunctionList.getInstance().get(i).getName());
+		}
+		// draw lower border
+		System.out.println(" └"
+				+ new String(new char[CHARS_BEFORE_AND_AFTER_FUNCTIONNAME
+						+ maxFuncnameLength]).replace("\0", "═") + "┘");
+
+		System.out.print(" Select one of the fitness functions by number: ");
+		@SuppressWarnings("resource")
+		Scanner in = new Scanner(System.in);
+
+		// Reads a single line from the console
+		try {
+			fnumber = Integer.parseInt(in.nextLine()) - 1;
+			if (!(fnumber >= 0 && fnumber < FunctionList.getInstance().size())) {
+				throw new NumberFormatException();
+			}
+			func = FunctionList.getInstance().get(fnumber);
+		} catch (NumberFormatException e) {
+			System.out
+					.println(" Input could not be read, default is used: func="
+							+ func.getName());
+		}
+
 		// TODO default value
-		return FunctionList.getInstance().get(2);
+		return func;
 	}
 
 	private static int askSize() {
@@ -106,6 +151,8 @@ public class MMAS {
 			}
 		} catch (NumberFormatException e) {
 			size = defaul;
+			System.out.println(" Input could not be read, default is used: n="
+					+ size);
 		}
 		return size;
 	}
