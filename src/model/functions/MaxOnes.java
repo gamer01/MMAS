@@ -23,7 +23,7 @@ public class MaxOnes extends FitnessFunction {
 
 	public BitSet getOptimum(int graphSize) {
 		BitSet optimum = new BitSet(graphSize);
-		for (int i = 0; i < optimum.length(); i++) {
+		for (int i = 0; i < graphSize; i++) {
 			optimum.set(i);
 		}
 		return optimum;

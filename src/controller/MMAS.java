@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.BitSet;
 import java.util.Scanner;
 
 import view.ConsoleViewer;
@@ -15,6 +16,7 @@ public class MMAS {
 	private static Individual fittest;
 	private static final long DEFAULT_ITERATIONTIME = 100L;
 	private static long iterationTime;
+	private static BitSet optimum;
 
 	public static void main(String[] args) {
 		
@@ -34,6 +36,7 @@ public class MMAS {
 		FitnessFunction func = askFitnessfunction();
 		double evap = askEvaporation();
 		int size = askSize();
+		optimum = func.getOptimum(size);
 		
 		ConsoleViewer.clear();
 
@@ -105,13 +108,11 @@ public class MMAS {
 		} catch (NumberFormatException e) {
 			size = defaul;
 		}
-
 		return size;
 	}
 
 	private static boolean fittestIndividualNotOptimum() {
-		// TODO Auto-generated method stub
-		return iteration < 99999 && model.getGraphSize() > fittest.getFitness();
+		return iteration < 99999 && !fittest.getBitSet().equals(optimum);
 	}
 
 	private static void update(Individual current) {
