@@ -12,6 +12,7 @@ public class FunctionList {
 		funcs = new ArrayList<FitnessFunction>();
 		funcs.add(new MaxOnes());
 		funcs.add(new LeadingZeros());
+		funcs.add(new And());
 	}
 
 	public static FunctionList getInstance() {

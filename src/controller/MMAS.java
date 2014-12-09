@@ -86,7 +86,7 @@ public class MMAS {
 
 	private static FitnessFunction askFitnessfunction() {
 		// TODO default value
-		return FunctionList.getInstance().get(1);
+		return FunctionList.getInstance().get(2);
 	}
 
 	private static int askSize() {

@@ -32,6 +32,6 @@ public class LeadingZeros extends FitnessFunction {
 
 	@Override
 	public String getThisComplexity() {
-		return "n²+(n log n)/ρ";
+		return "𝓞(n²+(n log n)/ρ)";
 	}
 }

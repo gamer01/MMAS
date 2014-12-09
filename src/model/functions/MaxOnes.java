@@ -15,7 +15,7 @@ public class MaxOnes extends FitnessFunction {
 
 	@Override
 	public String getThisComplexity() {
-		return "(n log n)/ρ";
+		return "𝓞((n log n)/ρ)";
 	}
 
 	@Override
