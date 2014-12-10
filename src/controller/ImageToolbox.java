@@ -47,6 +47,6 @@ public class ImageToolbox {
 			}
 		}
 		
-		return null;
+		return pixelMatrix;
 	}
 }
