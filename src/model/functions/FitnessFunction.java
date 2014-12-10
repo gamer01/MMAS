@@ -6,7 +6,7 @@ import java.util.BitSet;
 import model.Individual;
 
 public abstract class FitnessFunction {
-	
+
 	public abstract String getName();
 
 	public String getComplexityInfo(int graphSize, double evaporationFactor) {
@@ -20,6 +20,8 @@ public abstract class FitnessFunction {
 	public abstract String getThisComplexity();
 
 	public abstract double getFittness(Individual i);
+
+	public abstract double getFittness(BitSet binval);
 
 	public abstract BitSet getOptimum(int graphSize);
 }

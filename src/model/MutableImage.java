@@ -7,10 +7,10 @@ import java.util.BitSet;
 import controller.ImageToolbox;
 
 public class MutableImage {
-	BufferedImage image;
+	private BufferedImage image;
 
 	public MutableImage(BufferedImage img) {
-		image = ImageToolbox.deepCopy(img);
+		image = ImageToolbox.getPlainImg(img);
 	}
 
 	public BufferedImage getImage() {
@@ -43,10 +43,10 @@ public class MutableImage {
 	}
 
 	public void update(Individual fittest) {
-		BitSet binary = fittest.getBitSet();
+		BitSet binval = fittest.getBitSet();
 
 		WritableRaster raster = image.getRaster();
-		int[] value = new int[8];
+		int[] value = {0};
 		int index;
 
 		// for each pixel take 8 pixels from binary and set the pixel according
@@ -57,7 +57,8 @@ public class MutableImage {
 				for (int valueOffset = 0; valueOffset < 8; valueOffset++) {
 					index = (x * image.getWidth() + y) * image.getHeight()
 							+ valueOffset;
-					value[valueOffset] = binary.get(index) ? 1 : 0;
+					value[0] += (int) (Math.pow(2, 7 - valueOffset) * (binval
+							.get(index) ? 1 : 0));
 
 				}
 

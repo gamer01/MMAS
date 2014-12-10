@@ -29,7 +29,7 @@ public class MMAS {
 		view = new ConsoleViewer(model);
 
 		if (model.isFunctionImage()) {
-			
+
 			DisplayThread thread = new DisplayThread(model);
 			thread.run();
 			display = thread.getDisplay();
@@ -72,9 +72,11 @@ public class MMAS {
 
 	private static void update(Individual current) {
 		model.updatePheromones(fittest);
-		model.getMutableImg().update(fittest);
 		view.redraw(iteration, fittest, current);
-		display.update();
+		if (model.isFunctionImage()) {
+			model.getMutableImg().update(fittest);
+			display.update();
+		}
 	}
 
 }

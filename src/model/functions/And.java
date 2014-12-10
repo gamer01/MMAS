@@ -3,7 +3,6 @@ package model.functions;
 import java.util.BitSet;
 
 import model.Individual;
-import model.functions.FitnessFunction;
 
 public class And extends FitnessFunction {
 
@@ -21,6 +20,11 @@ public class And extends FitnessFunction {
 	public double getFittness(Individual individual) {
 		return individual.getLengh() == individual.getBitSet().cardinality() ? 1
 				: 0;
+	}
+
+	@Override
+	public double getFittness(BitSet binval) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

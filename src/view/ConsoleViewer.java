@@ -7,6 +7,7 @@ public class ConsoleViewer {
 
 	private int linewidth = 8;
 	private static final int PRECITION = 5;
+	private static final int PERFORMANCE_LIMIT_SIZE = 128;
 
 	private GraphModel model;
 	private String complexity;
@@ -23,7 +24,7 @@ public class ConsoleViewer {
 		System.out.print("\033[H");
 		System.out.flush();
 		printHead(iteration, fittest, current);
-		if (model.getGraphSize() <= 128 && !model.isFunctionImage()) {
+		if (model.getGraphSize() <= PERFORMANCE_LIMIT_SIZE) {
 			printPheromones();
 		}
 	}
@@ -41,7 +42,7 @@ public class ConsoleViewer {
 		System.out.print(complexity);
 		System.out.printf(" Best Fitness: %-12s      \tIteration: %05d\n",
 				fittest.getFitness(), iteration);
-		if (!model.isFunctionImage()) {
+		if (model.getGraphSize() <= PERFORMANCE_LIMIT_SIZE * 2) {
 			System.out.printf(" Best Path:    %s\n", fittest.toString());
 			System.out.printf(" Current Path: %s\n\n", current.toString());
 		}

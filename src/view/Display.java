@@ -1,10 +1,9 @@
 package view;
+
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import model.GraphModel;
+import controller.ImageToolbox;
 
 public class Display extends JFrame {
 
@@ -42,14 +42,14 @@ public class Display extends JFrame {
 		getContentPane().setLayout(new BorderLayout(10, 10));
 		getContentPane().add(getPreparedPanel("Original", in),
 				BorderLayout.WEST);
-		getContentPane().add(
-				getPreparedPanel("Current best Solution", out),
+		getContentPane().add(getPreparedPanel("Solution", out),
 				BorderLayout.EAST);
 	}
 
 	public void update() {
-		out = model.getMutableImg().getImage();
-		update(getGraphics());
+//		out = model.getMutableImg().getImage();
+		out=ImageToolbox.getImage("other");
+		repaint();
 	}
 
 	private JPanel getPreparedPanel(String titleText, BufferedImage image) {
@@ -58,8 +58,8 @@ public class Display extends JFrame {
 		JLabel title = new JLabel(titleText, SwingConstants.CENTER);
 		title.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
 
-		JLabel picture = new JLabel(new ImageIcon(image));
-		picture.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+		JLabel picture = new JLabel(new ImageIcon(ImageToolbox.resize(image,
+				512, 512)));
 
 		panel.add(title, BorderLayout.NORTH);
 		panel.add(picture, BorderLayout.CENTER);

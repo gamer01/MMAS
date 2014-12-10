@@ -18,7 +18,12 @@ public class MaxOnes extends FitnessFunction {
 
 	@Override
 	public double getFittness(Individual individual) {
-		return individual.getBitSet().cardinality();
+		return getFittness(individual.getBitSet());
+	}
+
+	@Override
+	public double getFittness(BitSet binval) {
+		return binval.cardinality();
 	}
 
 	@Override
