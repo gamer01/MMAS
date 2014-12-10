@@ -6,11 +6,15 @@ import model.GraphModel;
 import model.Individual;
 import model.UserInput;
 import view.ConsoleViewer;
+import view.Display;
+import view.DisplayThread;
 
 public class MMAS {
 
-	private static GraphModel model;
+	public static GraphModel model;
 	private static ConsoleViewer view;
+	private static Display display = null;
+
 	private static int iteration = 1;
 	private static Individual fittest;
 	private static long iterationTime;
@@ -23,6 +27,13 @@ public class MMAS {
 		model = new GraphModel(UserInput.getInstance(args));
 		optimum = model.getFunction().getOptimum(model.getGraphSize());
 		view = new ConsoleViewer(model);
+
+		if (model.isFunctionImage()) {
+			
+			DisplayThread thread = new DisplayThread(model);
+			thread.run();
+			display = thread.getDisplay();
+		}
 
 		fittest = model.createNewIndividual();
 		update(fittest);
@@ -61,7 +72,9 @@ public class MMAS {
 
 	private static void update(Individual current) {
 		model.updatePheromones(fittest);
+		model.getMutableImg().update(fittest);
 		view.redraw(iteration, fittest, current);
+		display.update();
 	}
 
 }

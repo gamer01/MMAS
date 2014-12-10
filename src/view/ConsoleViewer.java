@@ -23,7 +23,7 @@ public class ConsoleViewer {
 		System.out.print("\033[H");
 		System.out.flush();
 		printHead(iteration, fittest, current);
-		if (model.getGraphSize() <= 128) {
+		if (model.getGraphSize() <= 128 && !model.isFunctionImage()) {
 			printPheromones();
 		}
 	}
@@ -41,8 +41,10 @@ public class ConsoleViewer {
 		System.out.print(complexity);
 		System.out.printf(" Best Fitness: %-12s      \tIteration: %05d\n",
 				fittest.getFitness(), iteration);
-		System.out.printf(" Best Path:    %s\n", fittest.toString());
-		System.out.printf(" Current Path: %s\n\n", current.toString());
+		if (!model.isFunctionImage()) {
+			System.out.printf(" Best Path:    %s\n", fittest.toString());
+			System.out.printf(" Current Path: %s\n\n", current.toString());
+		}
 	}
 
 	private void printPheromones() {

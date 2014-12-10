@@ -43,7 +43,7 @@ public class Individual {
 		return length;
 	}
 
-	public int getFitness() {
+	public double getFitness() {
 		return fitnessFunction.getFittness(this);
 	}
 }

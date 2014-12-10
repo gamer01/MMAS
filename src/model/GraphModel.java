@@ -1,6 +1,10 @@
 package model;
 
+import java.awt.image.BufferedImage;
+
 import model.functions.FitnessFunction;
+import model.functions.ImageDifference;
+import controller.ImageToolbox;
 
 public class GraphModel {
 
@@ -9,10 +13,18 @@ public class GraphModel {
 
 	private LinearDAG graph;
 
+	private BufferedImage inputImg = null;
+	private MutableImage outputImg = null;
+
 	public GraphModel(UserInput input) {
+		fitnessFunction = input.getFitnessFunction();
+		evaporationRate = input.getEvaporation();
 		graph = new LinearDAG(input.getSize());
-		this.fitnessFunction = input.getFitnessFunction();
-		this.evaporationRate = input.getEvaporation();
+
+		if (isFunctionImage()) {
+			inputImg = ImageToolbox.getImage();
+			outputImg = new MutableImage(inputImg);
+		}
 	}
 
 	public void updatePheromones(Individual fittest) {
@@ -58,5 +70,17 @@ public class GraphModel {
 
 	public double getEvaporationRate() {
 		return evaporationRate;
+	}
+
+	public boolean isFunctionImage() {
+		return fitnessFunction instanceof ImageDifference;
+	}
+
+	public BufferedImage getInputImg() {
+		return inputImg;
+	}
+
+	public MutableImage getMutableImg() {
+		return outputImg;
 	}
 }

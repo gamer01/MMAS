@@ -6,11 +6,9 @@ import model.Individual;
 
 public class MaxOnes extends FitnessFunction {
 
-	private static final String name = "MaxOnes";
-
 	@Override
 	public String getName() {
-		return name;
+		return "MaxOnes";
 	}
 
 	@Override
@@ -19,7 +17,7 @@ public class MaxOnes extends FitnessFunction {
 	}
 
 	@Override
-	public int getFittness(Individual individual) {
+	public double getFittness(Individual individual) {
 		return individual.getBitSet().cardinality();
 	}
 

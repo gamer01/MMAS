@@ -7,11 +7,9 @@ import model.functions.FitnessFunction;
 
 public class And extends FitnessFunction {
 
-	private static final String name = "And";
-
 	@Override
 	public String getName() {
-		return name;
+		return "And";
 	}
 
 	@Override
@@ -20,7 +18,7 @@ public class And extends FitnessFunction {
 	}
 
 	@Override
-	public int getFittness(Individual individual) {
+	public double getFittness(Individual individual) {
 		return individual.getLengh() == individual.getBitSet().cardinality() ? 1
 				: 0;
 	}

@@ -2,47 +2,50 @@ package model;
 
 import java.util.Scanner;
 
-import view.ConsoleViewer;
 import model.functions.FitnessFunction;
 import model.functions.FunctionList;
+import model.functions.ImageDifference;
+import view.ConsoleViewer;
+import controller.ImageToolbox;
 
 public class UserInput {
 
 	private boolean noGreetingSoFar = true;
 	private Scanner in = new Scanner(System.in);
-	
+
 	private static UserInput instance = null;
-	
-	private UserInput (String[] cliArg){
-		setFitnessFunction(cliArg,0);
+
+	private UserInput(String[] cliArg) {
+		setFitnessFunction(cliArg, 0);
 		setEvaporation(cliArg, 1);
+		// Function must always be set before Size
 		setSize(cliArg, 2);
 	}
-	
-	public static UserInput getInstance(String[] cliArg){
-		if (instance == null){
-			new UserInput (cliArg);
+
+	public static UserInput getInstance(String[] cliArg) {
+		if (instance == null) {
+			instance = new UserInput(cliArg);
 		}
 		return instance;
 	}
-	
-	private static FitnessFunction func = null;
-	private static double evap = -1;
-	private static int size = -1;
+
+	private FitnessFunction func = null;
+	private double evap = -1;
+	private int size = -1;
 
 	private static void listFunctions() {
 		int maxFuncnameLength = 0;
 		for (int i = 0; i < FunctionList.getInstance().size(); i++) {
 			maxFuncnameLength = FunctionList.getInstance().get(i).getName()
 					.length() > maxFuncnameLength ? FunctionList.getInstance()
-							.get(i).getName().length() : maxFuncnameLength;
+					.get(i).getName().length() : maxFuncnameLength;
 		}
-		
+
 		// draw upper border
 		final int CHARS_BEFORE_AND_AFTER_FUNCTIONNAME = 8;
 		System.out.println(" ┌"
 				+ new String(new char[CHARS_BEFORE_AND_AFTER_FUNCTIONNAME
-				                      + maxFuncnameLength]).replace("\0", "═") + "┐");
+						+ maxFuncnameLength]).replace("\0", "═") + "┐");
 		// draw functions enumeration
 		for (int i = 0; i < FunctionList.getInstance().size(); i++) {
 			System.out.printf(" │ %2d - %-" + maxFuncnameLength + "s  │\n",
@@ -51,13 +54,13 @@ public class UserInput {
 		// draw lower border
 		System.out.println(" └"
 				+ new String(new char[CHARS_BEFORE_AND_AFTER_FUNCTIONNAME
-				                      + maxFuncnameLength]).replace("\0", "═") + "┘");
+						+ maxFuncnameLength]).replace("\0", "═") + "┘");
 	}
-	
-	protected FitnessFunction getFitnessFunction (){
+
+	protected FitnessFunction getFitnessFunction() {
 		return func;
 	}
-	
+
 	private void setFitnessFunction(String[] cliArg, int index) {
 		func = FunctionList.getInstance().get(0);
 		int fnumber = 0;
@@ -90,10 +93,10 @@ public class UserInput {
 		}
 	}
 
-	protected double getEvaporation(){
+	protected double getEvaporation() {
 		return evap;
 	}
-	
+
 	private void setEvaporation(String[] cliArg, int index) {
 		final double DEFAULT_EVAPORATION = 0.5D;
 
@@ -122,35 +125,49 @@ public class UserInput {
 		}
 	}
 
-	protected int getSize (){
+	protected int getSize() {
 		return size;
 	}
-	
+
 	private void setSize(String[] cliArg, int index) {
 		final int DEFAULT_SIZE = 16;
 		size = DEFAULT_SIZE;
 
 		try {
-			size = Integer.parseInt(cliArg[index]);
-			if (size < 1) {
-				throw new NumberFormatException();
-			}
-		} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-			try {
-				printGreeting();
-				// Reads a single line from the console
-				System.out.print(" Set n (from interval [1,∞[, default "
-						+ DEFAULT_SIZE + "):  ");
-				size = Integer.parseInt(in.nextLine());
-				if (size < 1) {
-					throw new NumberFormatException();
+			if (func instanceof ImageDifference) {
+				if (func == null) {
+					throw new NullPointerException();
 				}
-			} catch (NumberFormatException e2) {
-				size = DEFAULT_SIZE;
-				System.out
-						.println(" Input could not be read, default is used: n="
-								+ size);
+				size = ImageToolbox.numberOfBits(ImageToolbox.getImage());
+			} else {
+				try {
+					size = Integer.parseInt(cliArg[index]);
+					if (size < 1) {
+						throw new NumberFormatException();
+					}
+				} catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+					try {
+						printGreeting();
+						// Reads a single line from the console
+						System.out
+								.print(" Set n (from interval [1,∞[, default "
+										+ DEFAULT_SIZE + "):  ");
+						size = Integer.parseInt(in.nextLine());
+						if (size < 1) {
+							throw new NumberFormatException();
+						}
+					} catch (NumberFormatException e2) {
+						size = DEFAULT_SIZE;
+						System.out
+								.println(" Input could not be read, default is used: n="
+										+ size);
+					}
+				}
 			}
+		} catch (NullPointerException e) {
+			System.err
+					.println("The FittnessFunction must be set before the Graphsize\n"
+							+ "This error can just be fixed by the developer, sorry :(");
 		}
 	}
 
@@ -162,7 +179,5 @@ public class UserInput {
 			noGreetingSoFar = false;
 		}
 	}
-	
-
 
 }

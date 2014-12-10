@@ -13,6 +13,7 @@ public class FunctionList {
 		funcs.add(new MaxOnes());
 		funcs.add(new LeadingZeros());
 		funcs.add(new And());
+		funcs.add(new ImageDifference());
 	}
 
 	public static FunctionList getInstance() {

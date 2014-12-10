@@ -6,10 +6,13 @@ import model.Individual;
 
 public class LeadingZeros extends FitnessFunction {
 
-	private static final String name = "LeadingZeros";
+	@Override
+	public String getName() {
+		return "LeadingZeros";
+	}
 
 	@Override
-	public int getFittness(Individual individual) {
+	public double getFittness(Individual individual) {
 		BitSet binVal = individual.getBitSet();
 		int codeLength = individual.getLengh();
 
@@ -18,11 +21,6 @@ public class LeadingZeros extends FitnessFunction {
 			leadingZeros++;
 		}
 		return leadingZeros;
-	}
-
-	@Override
-	public String getName() {
-		return name;
 	}
 
 	@Override
