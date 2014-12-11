@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import model.GraphModel;
-import controller.ImageToolbox;
 
 public class Display extends JFrame {
 
@@ -20,6 +19,7 @@ public class Display extends JFrame {
 	private BufferedImage in;
 	private BufferedImage out;
 	private GraphModel model;
+	private ImagePanel outPanel;
 
 	public Display(GraphModel model) {
 		this.model = model;
@@ -40,26 +40,27 @@ public class Display extends JFrame {
 
 	private void setContent() {
 		getContentPane().setLayout(new BorderLayout(10, 10));
-		getContentPane().add(getPreparedPanel("Original", in),
+		getContentPane().add(getPreparedPanel("Original", in, false),
 				BorderLayout.WEST);
-		getContentPane().add(getPreparedPanel("Solution", out),
+		getContentPane().add(getPreparedPanel("Solution", out, true),
 				BorderLayout.EAST);
 	}
 
 	public void update() {
-//		out = model.getMutableImg().getImage();
-		out=ImageToolbox.getImage("other");
-		repaint();
+		outPanel.updateImg(model.getMutableImg().getImage());
 	}
 
-	private JPanel getPreparedPanel(String titleText, BufferedImage image) {
+	private JPanel getPreparedPanel(String titleText, BufferedImage image,
+			boolean isOut) {
 		JPanel panel = new JPanel(new BorderLayout(5, 5));
 
 		JLabel title = new JLabel(titleText, SwingConstants.CENTER);
 		title.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
 
-		JLabel picture = new JLabel(new ImageIcon(ImageToolbox.resize(image,
-				512, 512)));
+		ImagePanel picture = new ImagePanel(image);
+		if (isOut) {
+			outPanel = picture;
+		}
 
 		panel.add(title, BorderLayout.NORTH);
 		panel.add(picture, BorderLayout.CENTER);

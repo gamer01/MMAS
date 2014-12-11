@@ -65,7 +65,7 @@ public class MutableImage {
 				raster.setPixel(x, y, value);
 			}
 		}
-
-		image = new BufferedImage(image.getColorModel(), raster, true, null);
+		
+		image.setData(raster);
 	}
 }
