@@ -7,15 +7,16 @@ public class ConsoleViewer {
 
 	private int linewidth = 8;
 	private static final int PRECITION = 5;
-	private static final int PERFORMANCE_LIMIT_SIZE = 128;
+	private static final int PERFORMANCE_LIMIT_SIZE = 105;
 
 	private GraphModel model;
 	private String complexity;
 
 	public ConsoleViewer(GraphModel model) {
 		this.model = model;
-		linewidth = model.getGraphSize() > 16 ? (int) Math.ceil(Math.sqrt(model
-				.getGraphSize() * 2.0D)) : linewidth;
+		linewidth = model.getGraphSize() > 16 ? Math.max(8,
+				(int) Math.ceil(Math.sqrt(model.getGraphSize() * 2.0D)))
+				: linewidth;
 		complexity = model.getFunction().getComplexityInfo(
 				model.getGraphSize(), model.getEvaporationRate());
 	}

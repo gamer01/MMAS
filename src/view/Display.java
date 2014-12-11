@@ -64,8 +64,8 @@ public class Display extends JFrame {
 		title.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
 
 		ImagePanel picture = new ImagePanel(image);
-		picture.setMinimumSize(new Dimension(256, 256 * image.getWidth()
-				/ image.getHeight()));
+		picture.setMinimumSize(new Dimension(256, 256 * image.getHeight()
+				/ image.getWidth()));
 		if (isOut) {
 			outPanel = picture;
 		}

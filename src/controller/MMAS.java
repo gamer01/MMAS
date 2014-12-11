@@ -4,7 +4,6 @@ import java.util.BitSet;
 
 import model.GraphModel;
 import model.Individual;
-import model.MutableImage;
 import model.UserInput;
 import view.ConsoleViewer;
 import view.Display;
@@ -31,8 +30,6 @@ public class MMAS {
 			DisplayThread thread = new DisplayThread(model);
 			thread.run();
 			display = thread.getDisplay();
-			System.out.println(new MutableImage(ImageToolbox.getImage())
-					.getBitSet());
 		}
 
 		fittest = model.createNewIndividual();
