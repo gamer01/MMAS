@@ -67,7 +67,7 @@ public class ImageToolbox {
 
 		for (int x = 0; x < img.getWidth(); x++) {
 			for (int y = 0; y < img.getHeight(); y++) {
-				int index = x * (img.getWidth() - 1) + y;
+				int index = y * img.getWidth() + x;
 				pixelMatrix[x][y] = pixelList[index];
 			}
 		}
@@ -82,7 +82,7 @@ public class ImageToolbox {
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				for (int bits = 0; bits < 8; bits++) {
-					int index = (x * (width - 1) + y) * (height - 1) + bits;
+					int index = ((y * width) + x) * 8 + bits;
 					matrix[x][y] += (int) (Math.pow(2, 7 - bits) * (binval
 							.get(index) ? 1 : 0));
 				}

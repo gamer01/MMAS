@@ -41,9 +41,9 @@ public class ConsoleViewer {
 		if (model.getGraphSize() <= PERFORMANCE_LIMIT_SIZE * 2) {
 			System.out.printf(" Best Path:    %s\n", fittest.toString());
 			System.out.printf(" Current Path: %s\n\n", current.toString());
-			// int[][] matrix = ImageToolbox.bitsetToMatrix(fittest.getBitSet(),
-			// model.getInputImg().getWidth(), model.getInputImg()
-			// .getHeight());
+			// BitSet binval = fittest.getBitSet();
+			// int[][] matrix = ImageToolbox.bitsetToMatrix(binval, model
+			// .getInputImg().getWidth(), model.getInputImg().getHeight());
 			// System.out.printf(" %3d, %3d\n", matrix[0][0], matrix[0][1]);
 		}
 	}

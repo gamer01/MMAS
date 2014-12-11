@@ -16,6 +16,7 @@ public class MMAS {
 	private static Display display = null;
 
 	private static int iteration = 1;
+	private static boolean fittestHasChanged = true;
 	private static Individual fittest;
 	private static long iterationTime;
 	private static BitSet optimum;
@@ -33,7 +34,7 @@ public class MMAS {
 		}
 
 		fittest = model.createNewIndividual();
-		update(fittest);
+		update(fittest, fittestHasChanged);
 
 		while (fittestIndividualNotOptimum()) {
 			iteration++;
@@ -44,8 +45,12 @@ public class MMAS {
 			Individual newSolution = model.createNewIndividual();
 			if (newSolution.getFitness() > fittest.getFitness()) {
 				fittest = newSolution;
+				fittestHasChanged = true;
+			} else {
+				fittestHasChanged = false;
 			}
-			update(newSolution);
+
+			update(newSolution, fittestHasChanged);
 		}
 		view.goodBye();
 	}
@@ -68,10 +73,10 @@ public class MMAS {
 		return iteration < 99999 && !fittest.getBitSet().equals(optimum);
 	}
 
-	private static void update(Individual current) {
+	private static void update(Individual current, boolean hasChanged) {
 		model.updatePheromones(fittest);
 		view.repaint(iteration, fittest, current);
-		if (model.isFunctionImage()) {
+		if (model.isFunctionImage() && hasChanged) {
 			model.getMutableImg().update(fittest);
 			display.update();
 		}

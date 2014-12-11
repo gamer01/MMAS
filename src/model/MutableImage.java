@@ -36,7 +36,7 @@ public class MutableImage {
 				for (int valueOffset = 0; valueOffset < binValue.length; valueOffset++) {
 					if (binValue[valueOffset] == '1') {
 						index = (x * (image.getWidth() - 1) + y)
-								* (image.getHeight() - 1) + valueOffset;
+								* (image.getHeight() - 1) * 8 + valueOffset;
 						binary.set(index);
 					}
 				}
@@ -57,10 +57,9 @@ public class MutableImage {
 		// to it
 		for (int x = 0; x < image.getWidth(); x++) {
 			for (int y = 0; y < image.getHeight(); y++) {
-
 				for (int valueOffset = 0; valueOffset < 8; valueOffset++) {
-					index = (x * (image.getWidth() - 1) + y)
-							* (image.getHeight() - 1) + valueOffset;
+					index = (y * (image.getWidth()) + x) * image.getHeight()
+							+ valueOffset;
 					value[0] += (int) (Math.pow(2, 7 - valueOffset) * (binval
 							.get(index) ? 1 : 0));
 				}
