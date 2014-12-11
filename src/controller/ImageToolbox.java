@@ -90,4 +90,22 @@ public class ImageToolbox {
 		}
 		return matrix;
 	}
+
+	public static int[] bitsetToArray(BitSet binval, int width, int height) {
+
+		int[] pixels = new int[width * height];
+
+		// for each pixel take 8 pixels from binary and set the pixel according
+		// to it
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				for (int bits = 0; bits < 8; bits++) {
+					int index = ((y * width) + x) * 8 + bits;
+					pixels[y * width + x] += (int) (Math.pow(2, 7 - bits) * (binval
+							.get(index) ? 1 : 0));
+				}
+			}
+		}
+		return pixels;
+	}
 }

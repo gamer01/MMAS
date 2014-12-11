@@ -36,8 +36,8 @@ public class ImageDifference extends FitnessFunction {
 
 		double fitness = 0;
 
-		for (int x = 0; x < source.length; x++) {
-			for (int y = 0; y < source[0].length; y++) {
+		for (int x = 0; x < sourceImg.getWidth(); x++) {
+			for (int y = 0; y < sourceImg.getHeight(); y++) {
 				// sum over all pixels 1-absolute error
 				fitness += 1 - (Math.abs(source[x][y] - actual[x][y]) / Math
 						.pow(2, 8));

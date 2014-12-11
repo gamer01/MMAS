@@ -36,7 +36,7 @@ public class ConsoleViewer {
 				+ ", ρ=" + model.getEvaporationRate());
 		System.out.println();
 		System.out.print(complexity);
-		System.out.printf(" Best Fitness: %-12s      \tIteration: %05d\n",
+		System.out.printf(" Best Fitness: %-6.6s      \tIteration: %05d\n",
 				fittest.getFitness(), iteration);
 		if (model.getGraphSize() <= PERFORMANCE_LIMIT_SIZE * 2) {
 			System.out.printf(" Best Path:    %s\n", fittest.toString());
