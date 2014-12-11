@@ -34,9 +34,9 @@ public class Display extends JFrame {
 		setIconImage(icon.getImage());
 
 		setContent();
-//
-//		setMinimumSize(new Dimension(270, 175));
-	
+		//
+		// setMinimumSize(new Dimension(270, 175));
+
 		pack();
 
 		setVisible(true);
@@ -49,7 +49,11 @@ public class Display extends JFrame {
 	}
 
 	public void update() {
-		outPanel.updateImg(model.getMutableImg().getImage());
+		update(model.getMutableImg().getImage());
+	}
+
+	public void update(BufferedImage img) {
+		outPanel.updateImg(img);
 	}
 
 	private JPanel getPreparedPanel(String titleText, BufferedImage image,
@@ -60,7 +64,8 @@ public class Display extends JFrame {
 		title.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
 
 		ImagePanel picture = new ImagePanel(image);
-		picture.setMinimumSize(new Dimension(256,256*image.getWidth()/image.getHeight()));
+		picture.setMinimumSize(new Dimension(256, 256 * image.getWidth()
+				/ image.getHeight()));
 		if (isOut) {
 			outPanel = picture;
 		}

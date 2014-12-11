@@ -10,7 +10,7 @@ public class MutableImage {
 	private BufferedImage image;
 
 	public MutableImage(BufferedImage img) {
-		image = ImageToolbox.getPlainImg(img);
+		image = img;
 	}
 
 	public BufferedImage getImage() {
@@ -46,7 +46,7 @@ public class MutableImage {
 		BitSet binval = fittest.getBitSet();
 
 		WritableRaster raster = image.getRaster();
-		int[] value = {0};
+		int[] value = { 0 };
 		int index;
 
 		// for each pixel take 8 pixels from binary and set the pixel according
@@ -65,7 +65,7 @@ public class MutableImage {
 				raster.setPixel(x, y, value);
 			}
 		}
-		
+
 		image.setData(raster);
 	}
 }

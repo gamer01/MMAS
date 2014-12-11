@@ -91,7 +91,9 @@ public class ConsoleViewer {
 	}
 
 	public void goodBye() {
-		System.out.println("\n\n —— optimum found, finished ——\n");
+		System.out.println("\n\n —— optimum found, "
+				+ (model.isFunctionImage() ? "close window to exit application"
+						: "good bye") + " ——\n");
 	}
 
 }

@@ -61,7 +61,9 @@ public class ImageDifference extends FitnessFunction {
 
 	@Override
 	public BitSet getOptimum(int graphSize) {
-		return new MutableImage(ImageToolbox.getImage()).getBitSet();
+		MutableImage mutImg = new MutableImage(ImageToolbox.getImage());
+		BitSet val = mutImg.getBitSet();
+		return val;
 	}
 
 }

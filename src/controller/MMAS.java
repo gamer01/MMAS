@@ -4,6 +4,7 @@ import java.util.BitSet;
 
 import model.GraphModel;
 import model.Individual;
+import model.MutableImage;
 import model.UserInput;
 import view.ConsoleViewer;
 import view.Display;
@@ -21,18 +22,17 @@ public class MMAS {
 	private static BitSet optimum;
 
 	public static void main(String[] args) {
-
 		setIterationTime(args);
 
 		model = new GraphModel(UserInput.getInstance(args));
 		optimum = model.getFunction().getOptimum(model.getGraphSize());
 		view = new ConsoleViewer(model);
-
 		if (model.isFunctionImage()) {
-
 			DisplayThread thread = new DisplayThread(model);
 			thread.run();
 			display = thread.getDisplay();
+			System.out.println(new MutableImage(ImageToolbox.getImage())
+					.getBitSet());
 		}
 
 		fittest = model.createNewIndividual();

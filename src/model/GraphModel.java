@@ -23,7 +23,7 @@ public class GraphModel {
 
 		if (isFunctionImage()) {
 			inputImg = ImageToolbox.getImage();
-			outputImg = new MutableImage(inputImg);
+			outputImg = new MutableImage(ImageToolbox.getPlainImg(inputImg));
 		}
 	}
 
