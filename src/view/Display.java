@@ -1,7 +1,9 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
@@ -32,18 +34,18 @@ public class Display extends JFrame {
 		setIconImage(icon.getImage());
 
 		setContent();
-
+//
+//		setMinimumSize(new Dimension(270, 175));
+	
 		pack();
 
 		setVisible(true);
 	}
 
 	private void setContent() {
-		getContentPane().setLayout(new BorderLayout(10, 10));
-		getContentPane().add(getPreparedPanel("Original", in, false),
-				BorderLayout.WEST);
-		getContentPane().add(getPreparedPanel("Solution", out, true),
-				BorderLayout.EAST);
+		getContentPane().setLayout(new GridLayout(0, 2, 10, 10));
+		getContentPane().add(getPreparedPanel("Original", in, false));
+		getContentPane().add(getPreparedPanel("Solution", out, true));
 	}
 
 	public void update() {
@@ -58,6 +60,7 @@ public class Display extends JFrame {
 		title.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
 
 		ImagePanel picture = new ImagePanel(image);
+		picture.setMinimumSize(new Dimension(256,256*image.getWidth()/image.getHeight()));
 		if (isOut) {
 			outPanel = picture;
 		}

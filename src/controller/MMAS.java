@@ -50,6 +50,7 @@ public class MMAS {
 			}
 			update(newSolution);
 		}
+		view.goodBye();
 	}
 
 	private static void setIterationTime(String[] args) {

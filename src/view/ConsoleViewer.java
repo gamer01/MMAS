@@ -90,4 +90,8 @@ public class ConsoleViewer {
 		return str;
 	}
 
+	public void goodBye() {
+		System.out.println("\n\n —— optimum found, finished ——\n");
+	}
+
 }
