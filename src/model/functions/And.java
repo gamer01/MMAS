@@ -23,11 +23,6 @@ public class And extends FitnessFunction {
 	}
 
 	@Override
-	public double getFittness(BitSet binval) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public BitSet getOptimum(int graphSize) {
 		BitSet optimum = new BitSet(graphSize);
 		for (int i = 0; i < graphSize; i++) {

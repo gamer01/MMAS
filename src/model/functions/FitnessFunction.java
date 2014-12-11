@@ -21,7 +21,5 @@ public abstract class FitnessFunction {
 
 	public abstract double getFittness(Individual i);
 
-	public abstract double getFittness(BitSet binval);
-
 	public abstract BitSet getOptimum(int graphSize);
 }

@@ -138,7 +138,7 @@ public class UserInput {
 				if (func == null) {
 					throw new NullPointerException();
 				}
-				size = ImageToolbox.numberOfBits(ImageToolbox.getImage());
+				size = ImageToolbox.numberOfBits(ImageToolbox.loadImage());
 			} else {
 				try {
 					size = Integer.parseInt(cliArg[index]);

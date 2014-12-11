@@ -21,18 +21,13 @@ public class ConsoleViewer {
 				model.getGraphSize(), model.getEvaporationRate());
 	}
 
-	public void redraw(int iteration, Individual fittest, Individual current) {
+	public void repaint(int iteration, Individual fittest, Individual current) {
 		System.out.print("\033[H");
 		System.out.flush();
 		printHead(iteration, fittest, current);
 		if (model.getGraphSize() <= PERFORMANCE_LIMIT_SIZE) {
 			printPheromones();
 		}
-	}
-
-	public static void clear() {
-		System.out.print("\033[H\033[2J");
-		System.out.flush();
 	}
 
 	private void printHead(int iteration, Individual fittest, Individual current) {
@@ -46,6 +41,10 @@ public class ConsoleViewer {
 		if (model.getGraphSize() <= PERFORMANCE_LIMIT_SIZE * 2) {
 			System.out.printf(" Best Path:    %s\n", fittest.toString());
 			System.out.printf(" Current Path: %s\n\n", current.toString());
+			// int[][] matrix = ImageToolbox.bitsetToMatrix(fittest.getBitSet(),
+			// model.getInputImg().getWidth(), model.getInputImg()
+			// .getHeight());
+			// System.out.printf(" %3d, %3d\n", matrix[0][0], matrix[0][1]);
 		}
 	}
 
@@ -67,7 +66,7 @@ public class ConsoleViewer {
 						1 - pheromones[i]);
 				whichX += String.format(" %" + ((PRECITION + 1) / 2)
 						+ "s%-2s %" + PRECITION / 2 + "s", "x",
-						subscript(i + 1), "");
+						toSubscript(i + 1), "");
 				i++;
 			}
 			System.out.println(oneProbabilities);
@@ -76,7 +75,13 @@ public class ConsoleViewer {
 		}
 	}
 
-	private String subscript(int number) {
+	public void goodBye() {
+		System.out.println("\n\n —— optimum found, "
+				+ (model.isFunctionImage() ? "close window to exit application"
+						: "good bye") + " ——\n");
+	}
+
+	public static String toSubscript(int number) {
 		String str = "" + number;
 		str = str.replaceAll("0", "₀");
 		str = str.replaceAll("1", "₁");
@@ -91,10 +96,8 @@ public class ConsoleViewer {
 		return str;
 	}
 
-	public void goodBye() {
-		System.out.println("\n\n —— optimum found, "
-				+ (model.isFunctionImage() ? "close window to exit application"
-						: "good bye") + " ——\n");
+	public static void clear() {
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
 	}
-
 }

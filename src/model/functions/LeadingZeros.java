@@ -32,9 +32,4 @@ public class LeadingZeros extends FitnessFunction {
 	public String getThisComplexity() {
 		return "𝓞(n²+(n log n)/ρ)";
 	}
-
-	@Override
-	public double getFittness(BitSet binval) {
-		throw new UnsupportedOperationException();
-	}
 }

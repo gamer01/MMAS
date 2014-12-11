@@ -22,8 +22,8 @@ public class GraphModel {
 		graph = new LinearDAG(input.getSize());
 
 		if (isFunctionImage()) {
-			inputImg = ImageToolbox.getImage();
-			outputImg = new MutableImage(ImageToolbox.getPlainImg(inputImg));
+			inputImg = ImageToolbox.loadImage();
+			outputImg = new MutableImage(ImageToolbox.plainCopy(inputImg));
 		}
 	}
 

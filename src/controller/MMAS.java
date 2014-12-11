@@ -70,7 +70,7 @@ public class MMAS {
 
 	private static void update(Individual current) {
 		model.updatePheromones(fittest);
-		view.redraw(iteration, fittest, current);
+		view.repaint(iteration, fittest, current);
 		if (model.isFunctionImage()) {
 			model.getMutableImg().update(fittest);
 			display.update();

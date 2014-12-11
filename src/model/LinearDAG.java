@@ -18,5 +18,4 @@ public class LinearDAG {
 	protected int getSize() {
 		return oneProbabilities.length;
 	}
-
 }

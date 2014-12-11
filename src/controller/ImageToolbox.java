@@ -1,12 +1,11 @@
 package controller;
 
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
+import java.util.BitSet;
 
 import javax.imageio.ImageIO;
 
@@ -16,7 +15,7 @@ public class ImageToolbox {
 		return 8 * img.getWidth() * img.getHeight();
 	}
 
-	public static BufferedImage getImage() {
+	public static BufferedImage loadImage() {
 		File imageFile = new File("image.png");
 		BufferedImage img = null;
 
@@ -28,8 +27,8 @@ public class ImageToolbox {
 
 		return img;
 	}
-	
-	public static BufferedImage getImage(String name) {
+
+	public static BufferedImage loadImage(String name) {
 		File imageFile = new File(name);
 		BufferedImage img = null;
 
@@ -48,39 +47,47 @@ public class ImageToolbox {
 		WritableRaster raster = bi.copyData(null);
 		return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
 	}
-	
-	public static BufferedImage getPlainImg(BufferedImage bi){
+
+	public static BufferedImage plainCopy(BufferedImage bi) {
 		ColorModel cm = bi.getColorModel();
 		boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
 		WritableRaster raster = bi.copyData(null);
-		raster.setPixels(0, 0, bi.getWidth(), bi.getHeight(), new int[bi.getWidth()*bi.getHeight()]);
+		raster.setPixels(0, 0, bi.getWidth(), bi.getHeight(),
+				new int[bi.getWidth() * bi.getHeight()]);
 		return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
 	}
 
-	public static int[][] pixelMatrix(BufferedImage img) {
-		int[][] pixelMatrix= new int[img.getWidth()][img.getHeight()];
-		
+	public static int[][] imgToMatrix(BufferedImage img) {
+		int[][] pixelMatrix = new int[img.getWidth()][img.getHeight()];
+
 		WritableRaster raster = img.getRaster();
-		
-		int[] pixelList = raster.getPixels(0, 0, img.getWidth(), img.getHeight(), (int[]) null);
-		
+
+		int[] pixelList = raster.getPixels(0, 0, img.getWidth(),
+				img.getHeight(), (int[]) null);
+
 		for (int x = 0; x < img.getWidth(); x++) {
 			for (int y = 0; y < img.getHeight(); y++) {
-				pixelMatrix[x][y] = pixelList[x*(img.getWidth()-1)+y] ;
+				int index = x * (img.getWidth() - 1) + y;
+				pixelMatrix[x][y] = pixelList[index];
 			}
 		}
-		
+
 		return pixelMatrix;
 	}
-	
-	public static BufferedImage resize(BufferedImage image, int width, int height) {
-	    BufferedImage bi = new BufferedImage(width, height, BufferedImage.TRANSLUCENT);
-	    Graphics2D g2d = (Graphics2D) bi.createGraphics();
-	    g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
-	    g2d.drawImage(image, 0, 0, width, height, null);
-	    g2d.dispose();
-	    return bi;
+
+	public static int[][] bitsetToMatrix(BitSet binval, int width, int height) {
+		int[][] matrix = new int[width][height];
+
+		// for all elements in bitcode, take 8 elements ant put it in a pixel
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				for (int bits = 0; bits < 8; bits++) {
+					int index = (x * (width - 1) + y) * (height - 1) + bits;
+					matrix[x][y] += (int) (Math.pow(2, 7 - bits) * (binval
+							.get(index) ? 1 : 0));
+				}
+			}
+		}
+		return matrix;
 	}
-	
-	
 }

@@ -17,7 +17,11 @@ public class MutableImage {
 		return image;
 	}
 
-	public BitSet getBitSet() {
+	public BitSet getBitset() {
+		return imgToBitSet(image);
+	}
+
+	private static BitSet imgToBitSet(BufferedImage image) {
 		BitSet binary = new BitSet(ImageToolbox.numberOfBits(image));
 
 		int value;
@@ -31,8 +35,8 @@ public class MutableImage {
 
 				for (int valueOffset = 0; valueOffset < binValue.length; valueOffset++) {
 					if (binValue[valueOffset] == '1') {
-						index = (x * image.getWidth() + y) * image.getHeight()
-								+ valueOffset;
+						index = (x * (image.getWidth() - 1) + y)
+								* (image.getHeight() - 1) + valueOffset;
 						binary.set(index);
 					}
 				}
@@ -55,13 +59,11 @@ public class MutableImage {
 			for (int y = 0; y < image.getHeight(); y++) {
 
 				for (int valueOffset = 0; valueOffset < 8; valueOffset++) {
-					index = (x * image.getWidth() + y) * image.getHeight()
-							+ valueOffset;
+					index = (x * (image.getWidth() - 1) + y)
+							* (image.getHeight() - 1) + valueOffset;
 					value[0] += (int) (Math.pow(2, 7 - valueOffset) * (binval
 							.get(index) ? 1 : 0));
-
 				}
-
 				raster.setPixel(x, y, value);
 			}
 		}

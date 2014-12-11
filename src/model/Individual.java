@@ -7,7 +7,7 @@ import model.functions.FitnessFunction;
 
 public class Individual {
 
-	private int length; // because BitSet sometimes apears to be smaller
+	private int length; // because BitSet has no fixed size
 	private BitSet value;
 	private FitnessFunction fitnessFunction;
 

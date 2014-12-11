@@ -1,5 +1,6 @@
 package model.functions;
 
+import java.awt.image.BufferedImage;
 import java.util.BitSet;
 
 import model.Individual;
@@ -26,26 +27,12 @@ public class ImageDifference extends FitnessFunction {
 
 	@Override
 	public double getFittness(Individual i) {
-		return getFittness(i.getBitSet());
-	}
+		BitSet binval = i.getBitSet();
 
-	@Override
-	public double getFittness(BitSet binval) {
-		int[][] source = ImageToolbox.pixelMatrix(MMAS.model.getInputImg());
-		int[][] actual = new int[source.length][source[0].length];
-
-		// for all elements in bitcode, take 8 elements ant put it in a pixle
-		for (int x = 0; x < actual.length; x++) {
-			for (int y = 0; y < actual[0].length; y++) {
-				for (int bits = 0; bits < 8; bits++) {
-					int index = (x * actual.length + y) * actual[0].length
-							+ bits;
-					actual[x][y] += (int) (Math.pow(2, 7 - bits) * (binval
-							.get(index) ? 1 : 0));
-
-				}
-			}
-		}
+		BufferedImage sourceImg = MMAS.model.getInputImg();
+		int[][] source = ImageToolbox.imgToMatrix(sourceImg);
+		int[][] actual = ImageToolbox.bitsetToMatrix(binval,
+				sourceImg.getWidth(), sourceImg.getHeight());
 
 		double fitness = 0;
 
@@ -61,9 +48,8 @@ public class ImageDifference extends FitnessFunction {
 
 	@Override
 	public BitSet getOptimum(int graphSize) {
-		MutableImage mutImg = new MutableImage(ImageToolbox.getImage());
-		BitSet val = mutImg.getBitSet();
+		MutableImage mutImg = new MutableImage(ImageToolbox.loadImage());
+		BitSet val = mutImg.getBitset();
 		return val;
 	}
-
 }
