@@ -12,9 +12,10 @@ public abstract class FitnessFunction {
 	public String getComplexityInfo(int graphSize, double evaporationFactor) {
 		BigDecimal iterations = new BigDecimal(2).pow(graphSize);
 
-		return " Iterations by trying out: "
-				+ String.format("%1.3e", iterations) + "\n MMAS needs "
-				+ getThisComplexity() + " for " + this.getName() + "\n\n";
+		return String.format(" Expected iterations when trying out: %1.3e\n",
+				iterations)
+				+ String.format(" MMAS needs %s for %s\n\n",
+						getThisComplexity(), getName());
 	}
 
 	public abstract String getThisComplexity();

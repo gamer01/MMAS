@@ -16,13 +16,8 @@ public class ImageDifference extends FitnessFunction {
 	}
 
 	@Override
-	public String getComplexityInfo(int graphSize, double evaporationFactor) {
-		return "";
-	}
-
-	@Override
 	public String getThisComplexity() {
-		return "";
+		return "𝓞(?)";
 	}
 
 	@Override

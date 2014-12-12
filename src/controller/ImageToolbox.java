@@ -108,4 +108,28 @@ public class ImageToolbox {
 		}
 		return pixels;
 	}
+
+	public static BitSet imgToBitSet(BufferedImage image) {
+		BitSet binary = new BitSet(numberOfBits(image));
+
+		int value;
+		int index;
+
+		for (int x = 0; x < image.getWidth(); x++) {
+			for (int y = 0; y < image.getHeight(); y++) {
+				value = image.getRaster().getPixel(x, y, (int[]) null)[0];
+				char[] binValue = Integer.toBinaryString(0x100 | value)
+						.substring(1).toCharArray();
+
+				for (int valueOffset = 0; valueOffset < binValue.length; valueOffset++) {
+					if (binValue[valueOffset] == '1') {
+						index = (y * image.getWidth() + x) * 8 + valueOffset;
+						binary.set(index);
+					}
+				}
+			}
+		}
+
+		return binary;
+	}
 }
